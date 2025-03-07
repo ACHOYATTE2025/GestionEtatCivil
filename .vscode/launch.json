@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-GestionEtatCivilApplication<gestionEtatCivil>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.example.gestionetatcivil.GestionEtatCivilApplication",
+      "projectName": "gestionEtatCivil",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
