@@ -1,7 +1,7 @@
-package com.example.birthadvance.MapperDto;
+package com.example.gestionetatcivil.MapperDto;
 
-import com.example.birthadvance.Dto.AccountAdminDto;
-import com.example.birthadvance.Entities.Account;
+import com.example.gestionetatcivil.Dto.AccountAdminDto;
+import com.example.gestionetatcivil.Entities.Account;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;

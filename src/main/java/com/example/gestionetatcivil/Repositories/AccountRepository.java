@@ -1,6 +1,7 @@
-package com.example.birthadvance.Repositories;
+package com.example.gestionetatcivil.Repositories;
 
-import com.example.birthadvance.Entities.Account;
+
+import com.example.gestionetatcivil.Entities.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

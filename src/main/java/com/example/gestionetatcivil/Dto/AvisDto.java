@@ -1,4 +1,4 @@
-package com.example.birthadvance.Dto;
+package com.example.gestionetatcivil.Dto;
 
 import java.util.Date;
 

@@ -1,17 +1,24 @@
-package com.example.birthadvance.Controller;
+package com.example.gestionetatcivil.Controller;
 
-import com.example.birthadvance.Dto.AvisDto;
-import com.example.birthadvance.Dto.ExtraitDto;
-import com.example.birthadvance.Entities.Avis;
-import com.example.birthadvance.Entities.ExtraitNaissance;
-import com.example.birthadvance.Entities.Paiement;
-import com.example.birthadvance.Service.ExtraitService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.stream.Stream;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.gestionetatcivil.Dto.AvisDto;
+import com.example.gestionetatcivil.Dto.ExtraitDto;
+import com.example.gestionetatcivil.Entities.Avis;
+import com.example.gestionetatcivil.Entities.ExtraitNaissance;
+import com.example.gestionetatcivil.Entities.Paiement;
+import com.example.gestionetatcivil.Service.ExtraitService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
@@ -19,7 +26,7 @@ import java.util.stream.Stream;
 public class ExtraitController {
 
     private final ExtraitService birthDocService;
-    ExtraitDto extraitDto;
+
 
     public ExtraitController(ExtraitService birthDocService) {
         this.birthDocService = birthDocService;
@@ -29,8 +36,8 @@ public class ExtraitController {
     // lire tous les extraits
     @GetMapping("/liredoc")
     @PreAuthorize("hasAnyAuthority('AMINISTRATOR,MANAGER,EMPLOYEE')")
-    public List<ExtraitDto> liretousdoc(@RequestParam(required = false)  String numeroExtrait) {
-       return (List<ExtraitDto>) this.birthDocService.liretousdoc(numeroExtrait);
+    public Stream<ExtraitDto> liretousdoc(@RequestParam(required = false)  String numero) {
+       return this.birthDocService.liretousdoc(numero);
     }
 
 
@@ -43,16 +50,16 @@ public class ExtraitController {
     }
 
     // creation d'extrait
-    @PreAuthorize("hasAnyAuthority('EMPLOYEE,ADMINISTRATOR')")
+    @PreAuthorize("hasAnyAuthority('USER,EMPLOYEE,ADMINISTRATOR')")
     @PostMapping("/creationdoc")
-    public void creationdocument(@RequestBody ExtraitNaissance birth) throws Exception {
+    public void creationdocument(@RequestBody ExtraitNaissance birth) {
         this.birthDocService.creationdocument(birth);
     }
 
     //paiment des frais d'estrait de naissance
     @PreAuthorize("hasAnyAuthority('USER')")
     @PostMapping("/paiement")
-    public boolean paiementdoc(Paiement paiement) throws Exception {
+    public boolean paiementdoc(Paiement paiement) {
         return this.birthDocService.paiementDoc(paiement);
 
     }
@@ -60,21 +67,21 @@ public class ExtraitController {
     //creer un avis sur un extrait
     @PreAuthorize("hasAnyAuthority('EMPLOYEE','MANAGER','ADMINISTRATOR')")
     @PostMapping("/avisdoc")
-    public void avisdocument(@RequestBody Avis noted)  throws Exception {
+    public void avisdocument(@RequestBody Avis noted)  {
         this.birthDocService.avisdocument(noted); }
 
 
     //lire les avis
     @PreAuthorize("hasAnyAuthority('EMPLOYEE')")
     @GetMapping("/lireavis")
-    public Stream<AvisDto> readavis()  throws Exception {
+    public Stream<AvisDto> readavis()   {
        return this.birthDocService.readavis();}
 
 
     //lire un avis
     @PreAuthorize("hasAnyAuthority('EMPLOYEE')")
     @GetMapping("/lireavis/{id}")
-    public Stream<AvisDto>  Readunavis(@PathVariable Long id)  throws Exception {
+    public Stream<AvisDto>  Readunavis(@PathVariable Long id)   {
         return  this.birthDocService.readunavis(id); }
 }
 

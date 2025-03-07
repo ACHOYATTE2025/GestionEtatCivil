@@ -1,2 +1,6 @@
-package com.example.gestionetatcivil.Enum;public enum TypeSexe {
+package com.example.gestionetatcivil.Enum;
+
+public enum TypeSexe {
+    FEMININ,
+    MASCULIN
 }

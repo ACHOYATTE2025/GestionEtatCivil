@@ -1,7 +1,7 @@
-package com.example.birthadvance.MapperDto;
+package com.example.gestionetatcivil.MapperDto;
 
-import com.example.birthadvance.Dto.AvisDto;
-import com.example.birthadvance.Entities.Avis;
+import com.example.gestionetatcivil.Dto.AvisDto;
+import com.example.gestionetatcivil.Entities.Avis;
 import org.springframework.cglib.core.internal.Function;
 import org.springframework.stereotype.Component;
 

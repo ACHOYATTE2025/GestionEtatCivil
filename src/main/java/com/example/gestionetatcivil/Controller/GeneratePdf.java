@@ -1,15 +1,17 @@
-package com.example.birthadvance.Controller;
-/*
-import com.example.birthadvance.Service.GeneratePdfService;
-import lombok.AllArgsConstructor;
+package com.example.gestionetatcivil.Controller;
+
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
+import com.example.gestionetatcivil.Service.GeneratePdfService;
+
+import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
@@ -19,10 +21,10 @@ public class GeneratePdf {
 
     // generer pdf
 
-    @GetMapping(path = "genertepdf")
-    public ResponseEntity<byte[]> generatePdf() throws IOException {
+    @GetMapping(path = "acte_naissance_pdf")
+    public ResponseEntity<byte[]> ectraitNaissancePdf(@RequestParam(required = false ) String  num) throws Exception {
         // Appeler le service pour générer le PDF
-        byte[] pdfContent = generatePdfService.generatePdf();
+        byte[] pdfContent = generatePdfService.generatepdf();
 
         // Configurer les en-têtes de la réponse pour indiquer qu'il s'agit d'un fichier PDF
         HttpHeaders headers = new HttpHeaders();
@@ -35,4 +37,3 @@ public class GeneratePdf {
 
 
 }
-*/

@@ -1,4 +1,4 @@
-package com.example.birthadvance.Controller.Advice;
+package com.example.gestionetatcivil.Controller.Advice;
 
 
 import lombok.extern.slf4j.Slf4j;

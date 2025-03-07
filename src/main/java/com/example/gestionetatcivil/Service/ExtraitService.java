@@ -1,27 +1,26 @@
-package com.example.birthadvance.Service;
+package com.example.gestionetatcivil.Service;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
-import com.example.birthadvance.Dto.AvisDto;
-import com.example.birthadvance.Dto.ExtraitDto;
-import com.example.birthadvance.Entities.Avis;
-import com.example.birthadvance.Entities.ExtraitNaissance;
-import com.example.birthadvance.Entities.Paiement;
-import com.example.birthadvance.Entities.Account;
-import com.example.birthadvance.MapperDto.ExtraitMapperDto;
-import com.example.birthadvance.Repositories.AvisRepository;
-import com.example.birthadvance.Repositories.ExtraitRepository;
-import com.example.birthadvance.Repositories.PaiementRepository;
-import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.gestionetatcivil.Dto.AvisDto;
+import com.example.gestionetatcivil.Dto.ExtraitDto;
+import com.example.gestionetatcivil.Entities.Account;
+import com.example.gestionetatcivil.Entities.Avis;
+import com.example.gestionetatcivil.Entities.ExtraitNaissance;
+import com.example.gestionetatcivil.Entities.Paiement;
+import com.example.gestionetatcivil.MapperDto.ExtraitMapperDto;
+import com.example.gestionetatcivil.Repositories.AvisRepository;
+import com.example.gestionetatcivil.Repositories.ExtraitRepository;
+import com.example.gestionetatcivil.Repositories.PaiementRepository;
 
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 
 
@@ -68,14 +67,16 @@ public class ExtraitService {
     }
 /*******************************************************************************************************/
     //lire tous les extraits
-    public List<ExtraitDto> liretousdoc(String numeroExtrait) {
-        boolean notEmpty = Strings.isNotEmpty(numeroExtrait);
+
+    
+    public Stream<ExtraitDto> liretousdoc(String numero) {
+        boolean notEmpty = Strings.isNotEmpty(numero);
 
         if(notEmpty){
-            return ( Stream.of(this.birthDocRepository.
-                    findByNumeroExtrait(numeroExtrait)).map(extraitMapperDto).toList()); }
+            return  Stream.ofNullable(extraitMapperDto).map(null);
+        }
 
-            return ( this.birthDocRepository.findAll()).stream().map(extraitMapperDto).toList();
+            return  this.birthDocRepository.findAll().stream().map(extraitMapperDto);
     }
 
 /*********************************************************************************************************/
@@ -117,8 +118,8 @@ public class ExtraitService {
 /*****************************************************************************************************************/
     //enregistrement d'un avis pour le document
     public void avisdocument(Avis noted) {
-        //Subscriber sub= (Subscriber) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //BirthDoc bb = (BirthDoc) ( SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+      // Account  sub= (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      //  ExtraitNaissance bb = (ExtraitNaissance) ( SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         log.info("DOCUMENT LU :");
         noted.setBirthDoc(this.documentLu.get());
 
@@ -142,8 +143,14 @@ public class ExtraitService {
                 avis.getNote(), avis.getValid(),avis.getDate())));
     }
 
+    //retrouver un extrait
+    public ExtraitNaissance generatExtrait(String num ) throws Exception{
+        return  (ExtraitNaissance) this.birthDocRepository.findByNumeroExtrait(num);
+
+    }
 
 }
+
 
 
 

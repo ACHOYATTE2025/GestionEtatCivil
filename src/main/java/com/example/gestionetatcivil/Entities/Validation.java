@@ -1,4 +1,4 @@
-package com.example.birthadvance.Entities;
+package com.example.gestionetatcivil.Entities;
 
 
 import jakarta.persistence.*;

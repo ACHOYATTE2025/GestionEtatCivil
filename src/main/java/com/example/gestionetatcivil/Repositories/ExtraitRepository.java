@@ -1,11 +1,21 @@
-package com.example.birthadvance.Repositories;
+package com.example.gestionetatcivil.Repositories;
 
-import com.example.birthadvance.Entities.ExtraitNaissance;
+
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.example.gestionetatcivil.Entities.ExtraitNaissance;
+
+
+
+
+
+
+
 public interface ExtraitRepository extends JpaRepository<ExtraitNaissance, Long> {
-
+   
+   String findByNumeroExtrait = null;
    public ExtraitNaissance findByNumeroExtrait(String numeroExtrait);
-
+   public ExtraitNaissance  findById(long id);
 
 }

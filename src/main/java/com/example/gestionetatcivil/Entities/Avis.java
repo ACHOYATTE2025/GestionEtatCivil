@@ -1,9 +1,19 @@
-package com.example.birthadvance.Entities;
-
-import jakarta.persistence.*;
-import lombok.*;
+package com.example.gestionetatcivil.Entities;
 
 import java.util.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -12,10 +22,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "avisdoc")
+@Table(name = "avisSurExtrait")
 public class Avis {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title="Notes rélatives à l'extrait de naissance";
     private String note;
@@ -23,7 +33,7 @@ public class Avis {
     private Date date;
 
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne()
     private ExtraitNaissance birthDoc;
 
 

@@ -1,29 +1,35 @@
-package com.example.birthadvance.Controller;
-
-import com.example.birthadvance.Dto.AccountAdminDto;
-import com.example.birthadvance.Dto.AccountDto;
-import com.example.birthadvance.Entities.Account;
-import com.example.birthadvance.Entities.Validation;
-import com.example.birthadvance.Repositories.AccountRepository;
-import com.example.birthadvance.Repositories.ValidationRepository;
-import com.example.birthadvance.Security.JwtService;
-import com.example.birthadvance.Service.AccountService;
-import com.example.birthadvance.Service.ContextSouscripteur;
-import com.example.birthadvance.Service.NotificationService;
-import com.example.birthadvance.Service.ValidationService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+package com.example.gestionetatcivil.Controller;
 
 import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.gestionetatcivil.Dto.AccountAdminDto;
+import com.example.gestionetatcivil.Entities.Account;
+import com.example.gestionetatcivil.Entities.Validation;
+import com.example.gestionetatcivil.Repositories.AccountRepository;
+import com.example.gestionetatcivil.Repositories.ValidationRepository;
+import com.example.gestionetatcivil.Security.JwtService;
+import com.example.gestionetatcivil.Service.AccountService;
+import com.example.gestionetatcivil.Service.ContextSouscripteur;
+import com.example.gestionetatcivil.Service.NotificationService;
+import com.example.gestionetatcivil.Service.ValidationService;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
@@ -108,6 +114,9 @@ public class AccountController {
         if(validationX==null) {throw new RuntimeException("code not found");}
         if(!validationX.getCode().equals(code)){
             throw new RuntimeException("code Invalid");
+        }
+        if(Instant.now().isAfter(validationX.getExpirationCode())){
+            throw new RuntimeException("expiration Code Invalid");
         }
 
         return this.jwtService.generateToken(validationX.getSubscriber().getEmail());

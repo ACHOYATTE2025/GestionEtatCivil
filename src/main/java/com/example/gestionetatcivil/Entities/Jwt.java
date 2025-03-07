@@ -1,7 +1,18 @@
-package com.example.birthadvance.Entities;
+package com.example.gestionetatcivil.Entities;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -14,10 +25,10 @@ import lombok.*;
 public class Jwt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String valeur;
     private Boolean desactive=false;
     private Boolean expiration=false;
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Account subscriber;
 }

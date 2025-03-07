@@ -1,7 +1,7 @@
-package com.example.birthadvance.Security;
+package com.example.gestionetatcivil.Security;
 
-import com.example.birthadvance.Service.AccountService;
-import com.example.birthadvance.Entities.Jwt;
+import com.example.gestionetatcivil.Entities.Jwt;
+import com.example.gestionetatcivil.Service.AccountService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

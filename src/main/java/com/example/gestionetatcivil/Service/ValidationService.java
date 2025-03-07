@@ -1,8 +1,8 @@
-package com.example.birthadvance.Service;
+package com.example.gestionetatcivil.Service;
 
-import com.example.birthadvance.Entities.Account;
-import com.example.birthadvance.Repositories.ValidationRepository;
-import com.example.birthadvance.Entities.Validation;
+import com.example.gestionetatcivil.Entities.Account;
+import com.example.gestionetatcivil.Entities.Validation;
+import com.example.gestionetatcivil.Repositories.ValidationRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -47,7 +47,7 @@ public class ValidationService {
         this.codeX = code;
 
         this.validationRepository.save(validation);
-        this.notificationService.sendNotification(Optional.of(validation));
+        this.notificationService.sendNotification(validation);
 
     }
 

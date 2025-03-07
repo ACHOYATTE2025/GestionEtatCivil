@@ -1,4 +1,4 @@
-package com.example.birthadvance.Enum;
+package com.example.gestionetatcivil.Enum;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

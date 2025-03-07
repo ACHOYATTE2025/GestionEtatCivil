@@ -1,24 +1,29 @@
-package com.example.birthadvance.Entities;
+package com.example.gestionetatcivil.Entities;
 
-import com.example.birthadvance.Enum.TypeRole;
-import jakarta.persistence.*;
-import lombok.*;
+import com.example.gestionetatcivil.Enum.TypeRole;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "role")
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    public TypeRole libelle;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
+  private TypeRole libelle;
+  
 
-    public Role(int i, TypeRole typeRole) {
-    }
-
-
+    
 }

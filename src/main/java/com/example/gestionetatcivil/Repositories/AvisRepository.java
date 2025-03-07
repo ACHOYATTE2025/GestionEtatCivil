@@ -1,8 +1,8 @@
-package com.example.birthadvance.Repositories;
+package com.example.gestionetatcivil.Repositories;
 
-import com.example.birthadvance.Entities.Avis;
+
+import com.example.gestionetatcivil.Entities.Avis;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 public interface AvisRepository extends JpaRepository<Avis, Long> {
 }

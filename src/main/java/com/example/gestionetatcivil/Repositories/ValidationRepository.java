@@ -1,7 +1,8 @@
-package com.example.birthadvance.Repositories;
+package com.example.gestionetatcivil.Repositories;
 
-import com.example.birthadvance.Entities.Account;
-import com.example.birthadvance.Entities.Validation;
+
+import com.example.gestionetatcivil.Entities.Account;
+import com.example.gestionetatcivil.Entities.Validation;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

@@ -1,6 +1,7 @@
-package com.example.birthadvance.Repositories;
+package com.example.gestionetatcivil.Repositories;
 
-import com.example.birthadvance.Entities.Jwt;
+
+import com.example.gestionetatcivil.Entities.Jwt;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

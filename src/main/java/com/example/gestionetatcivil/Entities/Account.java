@@ -1,12 +1,27 @@
-package com.example.birthadvance.Entities;
-
-import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+package com.example.gestionetatcivil.Entities;
 
 import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.example.gestionetatcivil.Service.ExtraitService;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
@@ -34,7 +49,7 @@ public class Account implements UserDetails {
     private String choiX;
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    private List<ExtraitNaissance> birthDoc;
+    private List<ExtraitService> birthDoc;
 
     public Account(Account build) {
     }
@@ -42,7 +57,7 @@ public class Account implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.role.libelle.getAutorities();
+        return this.role.getLibelle().getAutorities();
     }
 
 

@@ -1,16 +1,10 @@
-package com.example.birthadvance.Service;
+package com.example.gestionetatcivil.Service;
 
-import com.example.birthadvance.Dto.AccountAdminDto;
-import com.example.birthadvance.Entities.Account;
-import com.example.birthadvance.Entities.Role;
-import com.example.birthadvance.Entities.Validation;
-import com.example.birthadvance.Enum.TypeRole;
-import com.example.birthadvance.MapperDto.AccountMapperDto;
-import com.example.birthadvance.Repositories.AccountRepository;
-import com.example.birthadvance.Repositories.ValidationRepository;
-import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.time.Instant;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,10 +13,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
+import com.example.gestionetatcivil.Dto.AccountAdminDto;
+import com.example.gestionetatcivil.Entities.Account;
+import com.example.gestionetatcivil.Entities.Role;
+import com.example.gestionetatcivil.Entities.Validation;
+import com.example.gestionetatcivil.Enum.TypeRole;
+import com.example.gestionetatcivil.MapperDto.AccountMapperDto;
+import com.example.gestionetatcivil.Repositories.AccountRepository;
+import com.example.gestionetatcivil.Repositories.ValidationRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Service
@@ -42,7 +44,7 @@ public class AccountService implements UserDetailsService {
 
     // Register a susbscriber (EMPLOYEE/MANAGER) par l'admin
     public void registerAdmin(Account subscriber) {
-        Optional<Account> sub = contextSouscripteur.getSouscripteur();
+        Optional<Account> sub =  contextSouscripteur.getSouscripteur();
         log.info("A VERIFIER  :"+sub.get().getUsername());
         //check if he exists already
         if (accountRepository.findByEmail(sub.get().getEmail()).isPresent()) {
@@ -53,7 +55,7 @@ public class AccountService implements UserDetailsService {
             throw new RuntimeException("Invalid email format");
         }
         // make the role
-        Role role = new Role(0, TypeRole.ADMINISTRATOR);
+        Role role = new Role();
         Role roleX = sub.get().getRole();
         if (roleX.getLibelle().equals(TypeRole.ADMINISTRATOR)) {
             if (subscriber.getChoiX().equals("EMPLOYEE")) {
@@ -87,7 +89,7 @@ public class AccountService implements UserDetailsService {
             throw new RuntimeException("Invalid email format");
         }
         // make the role
-        Role role = new Role(0, TypeRole.ADMINISTRATOR);
+        Role role = new Role();
         role.setLibelle(TypeRole.USER);
         subscriber.setRole(role);
 

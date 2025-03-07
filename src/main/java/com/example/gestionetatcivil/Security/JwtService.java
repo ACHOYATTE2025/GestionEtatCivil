@@ -1,11 +1,11 @@
-package com.example.birthadvance.Security;
+package com.example.gestionetatcivil.Security;
 
-import com.example.birthadvance.Entities.Account;
-import com.example.birthadvance.Repositories.JwtRepository;
-import com.example.birthadvance.Repositories.AccountRepository;
-import com.example.birthadvance.Service.AccountService;
+import com.example.gestionetatcivil.Entities.Account;
+import com.example.gestionetatcivil.Entities.Jwt;
+import com.example.gestionetatcivil.Repositories.AccountRepository;
+import com.example.gestionetatcivil.Repositories.JwtRepository;
+import com.example.gestionetatcivil.Service.AccountService;
 import io.jsonwebtoken.Claims;
-import com.example.birthadvance.Entities.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.time.Instant;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -136,7 +138,7 @@ public class JwtService {
     }
 
     public void  disableToken(Account subscriber){
-        final List<com.example.birthadvance.Entities.Jwt> jwtList = this.jwtRepository.findByAbonne(subscriber.getEmail()).
+        final List<com.example.gestionetatcivil.Entities.Jwt> jwtList = this.jwtRepository.findByAbonne(subscriber.getEmail()).
                 peek(
                         jwt -> {
                             jwt.setDesactive(true);
