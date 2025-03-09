@@ -26,7 +26,6 @@ import com.example.gestionetatcivil.Repositories.ValidationRepository;
 import com.example.gestionetatcivil.Security.JwtService;
 import com.example.gestionetatcivil.Service.AccountService;
 import com.example.gestionetatcivil.Service.ContextSouscripteur;
-import com.example.gestionetatcivil.Service.NotificationService;
 import com.example.gestionetatcivil.Service.ValidationService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,23 +37,17 @@ import lombok.extern.slf4j.Slf4j;
 
 public class AccountController {
     private final AccountService accountService;
-    private final ContextSouscripteur contextSouscripteur;
-    private AuthenticationManager authenticationManager;
-    private JwtService jwtService;
-    private NotificationService notificationService;
-
-    private ValidationRepository validationRepository;
-    private AccountRepository accountRepository;
-    private ValidationService validationService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+    private final AccountRepository accountRepository;
+    private final ValidationService validationService;
     private String Xcode;
 
     public AccountController(ValidationService validationService,   ValidationRepository validationRepository,   AuthenticationManager authenticationManager,AccountRepository accountRepository,  AccountService accountService, ContextSouscripteur contextSouscripteur,JwtService jwtService) {
         this.accountService = accountService;
-        this.contextSouscripteur = contextSouscripteur;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.accountRepository = accountRepository;
-        this.validationRepository = validationRepository;
         this.validationService = validationService;
 
     }

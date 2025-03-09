@@ -1,6 +1,5 @@
 package com.example.gestionetatcivil.Service;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.util.Strings;
@@ -73,7 +72,7 @@ public class ExtraitService {
         boolean notEmpty = Strings.isNotEmpty(numero);
 
         if(notEmpty){
-            return  Stream.ofNullable(extraitMapperDto).map(null);
+            return  (Stream<ExtraitDto>) this.birthDocRepository.findByNumeroExtrait(numero);
         }
 
             return  this.birthDocRepository.findAll().stream().map(extraitMapperDto);

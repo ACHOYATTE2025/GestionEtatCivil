@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.example.gestionetatcivil.Service.ExtraitService;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -46,10 +45,10 @@ public class Account implements UserDetails {
     private Role role;
 
     private Boolean active=false;
-    private String choiX;
+    private String choiX="";
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    private List<ExtraitService> birthDoc;
+    private List<ExtraitNaissance> birthDoc;
 
     public Account(Account build) {
     }
