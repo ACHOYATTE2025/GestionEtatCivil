@@ -32,7 +32,7 @@ public class ExtraitService {
     private final ExtraitRepository birthDocRepository;
     private final PaiementRepository paiementRepository;
     private final AvisRepository avisDocRepository;
-    private Optional<ExtraitNaissance> documentLu;
+    private  Optional<ExtraitNaissance> documentLu;
     private final ExtraitMapperDto extraitMapperDto;
 
 
@@ -70,12 +70,15 @@ public class ExtraitService {
     
     public Stream<ExtraitDto> liretousdoc(String numero) {
         boolean notEmpty = Strings.isNotEmpty(numero);
+       Optional<ExtraitNaissance> extrait =  birthDocRepository.findByNumeroExtrait(numero);
 
         if(notEmpty){
-            return  (Stream<ExtraitDto>) this.birthDocRepository.findByNumeroExtrait(numero);
+           this.documentLu= extrait;
+            return  (Stream<ExtraitDto>) extrait.stream().map(extraitMapperDto);
+            
         }
 
-            return  this.birthDocRepository.findAll().stream().map(extraitMapperDto);
+            return  (Stream<ExtraitDto>) this.birthDocRepository.findAll().stream().map(extraitMapperDto);
     }
 
 /*********************************************************************************************************/

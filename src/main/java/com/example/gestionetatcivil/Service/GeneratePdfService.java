@@ -25,7 +25,7 @@ public class GeneratePdfService {
     //
     public byte[] generatepdf() throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-       ExtraitNaissance extraitX = (ExtraitNaissance) this.extraitRepository.findByNumeroExtrait("ac");
+      // ExtraitNaissance extraitX = (ExtraitNaissance) this.extraitRepository.findByNumeroExtrait("ac");
 
         try {
             PdfWriter writer = new PdfWriter(out);

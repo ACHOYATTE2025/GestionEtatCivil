@@ -37,7 +37,7 @@ public class ExtraitController {
     @GetMapping("/liredoc")
     @PreAuthorize("hasAnyAuthority('AMINISTRATOR,MANAGER,EMPLOYEE')")
     public Stream<ExtraitDto> liretousdoc(@RequestParam(required = false)  String numero) {
-       return this.birthDocService.liretousdoc(numero);
+       return (Stream<ExtraitDto>) this.birthDocService.liretousdoc(numero);
     }
 
 

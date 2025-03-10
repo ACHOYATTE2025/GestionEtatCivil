@@ -1,10 +1,22 @@
 package com.example.gestionetatcivil.Security;
 
+import java.security.Key;
+import java.time.Instant;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
 import com.example.gestionetatcivil.Entities.Account;
 import com.example.gestionetatcivil.Entities.Jwt;
 import com.example.gestionetatcivil.Repositories.AccountRepository;
 import com.example.gestionetatcivil.Repositories.JwtRepository;
 import com.example.gestionetatcivil.Service.AccountService;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,16 +24,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-
-import java.security.Key;
-import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 @Service
 @Slf4j
@@ -126,7 +128,7 @@ public class JwtService {
                 sub.getEmail(), false, false).orElseThrow(() -> new RuntimeException(" invalid Token"));
         log.info("deconex: " + jwt.getValeur());
         this.disableToken(sub);
-        //jwtRepository.deleteAllByValeur(jwt.getValeur());
+        jwtRepository.deleteAllByValeur(jwt.getValeur());
 
 
     }
