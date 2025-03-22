@@ -146,10 +146,6 @@ public class ExtraitService {
     }
 
     //retrouver un extrait
-    public ExtraitNaissance generatExtrait(String num ) throws Exception{
-        return  (ExtraitNaissance) this.birthDocRepository.findByNumeroExtrait(num);
-
-    }
 
 }
 

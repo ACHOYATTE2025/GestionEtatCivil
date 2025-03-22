@@ -2,10 +2,11 @@ package com.example.gestionetatcivil;
 
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.gestionetatcivil.Entities.Account;
 import com.example.gestionetatcivil.Entities.Role;
@@ -16,10 +17,11 @@ import lombok.AllArgsConstructor;
 
 @SpringBootApplication
 @AllArgsConstructor
-public class GestionEtatCivilApplication implements CommandLineRunner {
 
+public class GestionEtatCivilApplication implements CommandLineRunner {
+    @Autowired    
     AccountRepository SubscriberRepository;
-    BCryptPasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
     public static void main(String[] args){
         SpringApplication.run(GestionEtatCivilApplication.class, args);

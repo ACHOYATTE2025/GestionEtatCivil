@@ -1,17 +1,20 @@
 package com.example.gestionetatcivil.Service;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.gestionetatcivil.Dto.AccountAdminDto;
 import com.example.gestionetatcivil.Entities.Account;
@@ -35,10 +38,12 @@ public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final ValidationRepository validationRepository;
     private final AccountMapperDto accountMapperDto;
-    private PasswordEncoder passwordEncoder;
+   
     private final ValidationService validationService;
     private ContextSouscripteur contextSouscripteur;
 
+    @Autowired
+private PasswordEncoder passwordEncoder;
 
 
 
@@ -79,7 +84,12 @@ public class AccountService implements UserDetailsService {
 /* ************************************************************************************************ */
 
     // Register a susbscriber par un USER
-    public void register(Account subscriber) {
+    public void  register(Account subscriber,MultipartFile  photo,MultipartFile cni_recto, MultipartFile cni_verso )throws IOException {
+
+        subscriber.setPhoto_Id( photo.getBytes());
+        subscriber.setCni_recto(cni_recto.getBytes());
+        subscriber.setCni_verso(cni_verso.getBytes());
+        
         //check if he exists already
         if (accountRepository.findByEmail(subscriber.getEmail()).isPresent()) {
             throw new RuntimeException("Subscriber already exists");
@@ -98,8 +108,10 @@ public class AccountService implements UserDetailsService {
         subscriber.setPassword(mdp);
         this.validationService.createCode(subscriber);
         this.accountRepository.save(subscriber);
-
+       
     }
+    
+    
 
 
 /* *****************************************************************************************************/

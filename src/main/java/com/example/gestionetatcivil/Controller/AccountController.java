@@ -1,11 +1,13 @@
 package com.example.gestionetatcivil.Controller;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.gestionetatcivil.Dto.AccountAdminDto;
 import com.example.gestionetatcivil.Entities.Account;
@@ -60,8 +63,18 @@ public class AccountController {
 
     // Register a susbscriber par un USER
     @PostMapping(path = "register")
-    public void register(@RequestBody Account subscriber) {
-            this.accountService.register(subscriber);
+    public ResponseEntity<?> register(@RequestBody Account subscriber, @RequestParam("photo") MultipartFile photo,
+    @RequestParam("cni_recto") MultipartFile cni_recto,@RequestParam("cni_verso") MultipartFile cni_verso ) throws IOException {
+            try {
+            if (photo.isEmpty()&cni_recto.isEmpty()&cni_verso.isEmpty()) {
+                throw new RuntimeException("Photo , cni_recto and cni_verso must'nt empty");
+            }
+
+            this.accountService.register(subscriber, photo,cni_recto,cni_verso);
+            return ResponseEntity.ok("Inscription Reussie : " );
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().body("Erreur lors de l'incription.");
+        }
     }
 
 
