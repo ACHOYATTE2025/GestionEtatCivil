@@ -63,7 +63,7 @@ public class AccountController {
 
     // Register a susbscriber par un USER
     @PostMapping(path = "register")
-    public ResponseEntity<?> register(@RequestBody Account subscriber, @RequestParam("photo") MultipartFile photo,
+    public ResponseEntity<String> register(@RequestBody Account subscriber, @RequestParam("photo") MultipartFile photo,
     @RequestParam("cni_recto") MultipartFile cni_recto,@RequestParam("cni_verso") MultipartFile cni_verso ) throws IOException {
             try {
             if (photo.isEmpty()&cni_recto.isEmpty()&cni_verso.isEmpty()) {

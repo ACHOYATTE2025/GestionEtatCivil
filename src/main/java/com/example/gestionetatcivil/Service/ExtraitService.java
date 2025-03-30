@@ -28,19 +28,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ExtraitService {
 
-
+   
     private final ExtraitRepository birthDocRepository;
     private final PaiementRepository paiementRepository;
     private final AvisRepository avisDocRepository;
-    private  Optional<ExtraitNaissance> documentLu;
+    private GlobalConfig globalConfig;
     private final ExtraitMapperDto extraitMapperDto;
+   
 
 
-    public ExtraitService(ExtraitMapperDto extraitMapperDto, ExtraitRepository birthDocRepository, PaiementRepository paiementRepository, AvisRepository avisDocRepository) {
+   public ExtraitService(ExtraitMapperDto extraitMapperDto,GlobalConfig globalConfig, ExtraitRepository birthDocRepository, PaiementRepository paiementRepository, AvisRepository avisDocRepository) {
         this.birthDocRepository = birthDocRepository;
         this.paiementRepository = paiementRepository;
         this.avisDocRepository = avisDocRepository;
         this.extraitMapperDto = extraitMapperDto;
+        this.globalConfig = globalConfig;
+        
+       
     }
 
 
@@ -73,7 +77,9 @@ public class ExtraitService {
        Optional<ExtraitNaissance> extrait =  birthDocRepository.findByNumeroExtrait(numero);
 
         if(notEmpty){
-           this.documentLu= extrait;
+           this.globalConfig.setDocumentLu( extrait);
+      
+           
             return  (Stream<ExtraitDto>) extrait.stream().map(extraitMapperDto);
             
         }
@@ -85,7 +91,8 @@ public class ExtraitService {
     // lire un extrait
     public Stream<ExtraitDto> lireundocument(Long id) {
         Stream<ExtraitDto> extraitDtoStream = this.birthDocRepository.findById(id).stream().map(extraitMapperDto);
-        this.documentLu= this.birthDocRepository.findById(id);
+        this.globalConfig.setDocumentLu( this.birthDocRepository.findById(id));
+     
         return extraitDtoStream;
 
     }
@@ -123,7 +130,7 @@ public class ExtraitService {
       // Account  sub= (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       //  ExtraitNaissance bb = (ExtraitNaissance) ( SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         log.info("DOCUMENT LU :");
-        noted.setBirthDoc(this.documentLu.get());
+        noted.setBirthDoc(this.globalConfig.getDocumentLu().get());
 
         this.avisDocRepository.save(noted);
     }

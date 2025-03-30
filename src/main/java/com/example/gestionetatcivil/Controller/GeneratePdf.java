@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.gestionetatcivil.Service.GeneratePdfService;
@@ -22,7 +21,7 @@ public class GeneratePdf {
     // generer pdf
 
     @GetMapping(path = "acte_naissance_pdf")
-    public ResponseEntity<byte[]> ectraitNaissancePdf(@RequestParam(required = false ) String  num) throws Exception {
+    public ResponseEntity<byte[]> ectraitNaissancePdf() throws Exception {
         // Appeler le service pour générer le PDF
         byte[] pdfContent = generatePdfService.generatepdf();
 
