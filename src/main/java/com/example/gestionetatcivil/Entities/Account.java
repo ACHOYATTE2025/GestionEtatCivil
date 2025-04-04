@@ -7,12 +7,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -40,28 +41,23 @@ public class Account implements UserDetails {
     private String password;
     private String phone;
     private String email;
+    private String choix;
+   
 
     @Lob
-    private Byte[] photo_Id;
-    
-    @Lob
-    private Byte[] cni_recto;
+    @Column(columnDefinition = "LONGBLOB")
+    private byte [][] images;// stocke 3 images en BLOB
 
-    @Lob
-    private Byte[] cni_verso;
-    
+    @ElementCollection
+    private List<String> imagesNames;// liste des noms de fichier
+
 
     @OneToOne(cascade = CascadeType.ALL )
     private Role role;
 
     private Boolean active=false;
-    private String choiX="";
-
-    @OneToMany(cascade = CascadeType.REMOVE)
-    private List<ExtraitNaissance> birthDoc;
-
-    public Account(Account build) {
-    }
+   
+  
 
 
     @Override
@@ -100,22 +96,8 @@ public class Account implements UserDetails {
     }
 
 
-    public void setPhoto_Id(byte[] bytes) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPhoto_Id'");
-    }
+    
 
-
-    public void setCni_recto(byte[] bytes) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'setCni_recto'");
-    }
-
-
-    public void setCni_verso(byte[] bytes) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'setCni_verso'");
-    }
 }
 
 

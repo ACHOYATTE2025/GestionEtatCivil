@@ -1,11 +1,13 @@
 package com.example.gestionetatcivil.Service;
 
 
-import com.example.gestionetatcivil.Entities.Validation;
-import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import com.example.gestionetatcivil.Entities.Validation;
+
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
@@ -26,7 +28,8 @@ public class NotificationService {
         message.setText(validation.getSubscriber().getUsername() +" votre code d'activation est :" +
                 validation.getCode()+ " valable  10 mins");
         this.javaMailSender.send(message);*/
-        log.info("code sent : " + validation.getCode());
+        System.out.println("");
+        System.out.println("Code Validation: " + validation.getCode());
 
     }
 }

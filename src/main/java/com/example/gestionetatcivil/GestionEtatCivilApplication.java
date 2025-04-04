@@ -14,14 +14,19 @@ import com.example.gestionetatcivil.Enum.TypeRole;
 import com.example.gestionetatcivil.Repositories.AccountRepository;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @SpringBootApplication
 @AllArgsConstructor
-
+@Getter
+@Setter
 public class GestionEtatCivilApplication implements CommandLineRunner {
     @Autowired    
+ 
     AccountRepository SubscriberRepository;
     PasswordEncoder passwordEncoder;
+
 
     public static void main(String[] args){
         SpringApplication.run(GestionEtatCivilApplication.class, args);
@@ -39,7 +44,7 @@ public class GestionEtatCivilApplication implements CommandLineRunner {
                 )
                 .email("admin@gmail.com")
                 .phone("0748365619")
-                .choiX("")
+                .choix("")
                 .build();
         admin = this.SubscriberRepository.findByEmail(admin.getEmail())
                 .orElse(admin);
@@ -56,7 +61,7 @@ public class GestionEtatCivilApplication implements CommandLineRunner {
                 )
                 .email("managerBirth@gmail.com")
                 .phone("0574803332")
-                .choiX("")
+                .choix("")
                 .build();
         manager = this.SubscriberRepository.findByEmail(manager.getEmail())
                 .orElse(manager);

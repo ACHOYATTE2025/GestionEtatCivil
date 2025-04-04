@@ -2,6 +2,8 @@ package com.example.gestionetatcivil.Service;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -63,7 +65,7 @@ private PasswordEncoder passwordEncoder;
         Role role = new Role();
         Role roleX = sub.get().getRole();
         if (roleX.getLibelle().equals(TypeRole.ADMINISTRATOR)) {
-            if (subscriber.getChoiX().equals("EMPLOYEE")) {
+            if (subscriber.getChoix().equals("EMPLOYEE")) {
                 role.setLibelle(TypeRole.EMPLOYEE);
             } else {
                 role.setLibelle(TypeRole.MANAGER);
@@ -84,32 +86,55 @@ private PasswordEncoder passwordEncoder;
 /* ************************************************************************************************ */
 
     // Register a susbscriber par un USER
-    public void  register(Account subscriber,MultipartFile  photo,MultipartFile cni_recto, MultipartFile cni_verso )throws IOException {
+    public void  register(String username,String password,String phone,String email,MultipartFile[] images )throws IOException {
+        
+        
+        //if(images.length!=3){throw new RuntimeException("Must be 3 Images");}//3 images obligatoires
 
-        subscriber.setPhoto_Id( photo.getBytes());
-        subscriber.setCni_recto(cni_recto.getBytes());
-        subscriber.setCni_verso(cni_verso.getBytes());
+        byte[][] imagesData = new byte[3][];
+        List<String> imagesNames = new ArrayList<>();
+
+        for(int i=0;i<3;i++){
+            imagesData[i]=images[i].getBytes();
+            /*if(!images[i].getOriginalFilename().contains("photo_id") ||!images[i].getOriginalFilename().contains("cni_recto") || 
+            !images[i].getOriginalFilename().contains("cni_verso")){
+                new RuntimeException("add the right name : photo_id,cni_recto,cni_verso");}*/
+            //imagesNames.add(images[i].getOriginalFilename());
+        }
+
+        
         
         //check if he exists already
-        if (accountRepository.findByEmail(subscriber.getEmail()).isPresent()) {
+        if (accountRepository.findByEmail(email).isPresent()) {
             throw new RuntimeException("Subscriber already exists");
         }
         //check the right email
-        if (!subscriber.getEmail().contains(".") || !subscriber.getEmail().contains("@")) {
+        if (!email.contains(".") || !email.contains("@")) {
             throw new RuntimeException("Invalid email format");
         }
+        Account subscriber = new Account(null,username,password,phone,email,email, imagesData, imagesNames, null, null);
         // make the role
         Role role = new Role();
         role.setLibelle(TypeRole.USER);
         subscriber.setRole(role);
+        //set choix
+        subscriber.setChoix("EMPLOYEE");
+        //active
+        subscriber.setActive(false);
 
         //crypt password
-        String mdp = passwordEncoder.encode(subscriber.getPassword());
+        String mdp = passwordEncoder.encode(password);
         subscriber.setPassword(mdp);
         this.validationService.createCode(subscriber);
         this.accountRepository.save(subscriber);
        
     }
+
+ /*                       --------                                                             */
+ //obtenir un compte et l'afficher
+ public Optional<Account>  ObtenirAcount(Long id){
+    return this.accountRepository.findById(id);
+ }
     
     
 

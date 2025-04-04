@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,24 +64,50 @@ public class AccountController {
     }
 
     // Register a susbscriber par un USER
-    @PostMapping(path = "register")
-    public ResponseEntity<String> register(@RequestBody Account subscriber, @RequestParam("photo") MultipartFile photo,
-    @RequestParam("cni_recto") MultipartFile cni_recto,@RequestParam("cni_verso") MultipartFile cni_verso ) throws IOException {
+    @PostMapping(path = "register",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> register(@RequestParam  String username,
+                                           @RequestParam  String password,
+                                           @RequestParam String phone,
+                                           @RequestParam String email,
+                                           @RequestParam(value = "images") MultipartFile[] images ) throws IOException {
             try {
-            if (photo.isEmpty()&cni_recto.isEmpty()&cni_verso.isEmpty()) {
-                throw new RuntimeException("Photo , cni_recto and cni_verso must'nt empty");
-            }
-
-            this.accountService.register(subscriber, photo,cni_recto,cni_verso);
+                
+                 this.accountService.register(username,password,phone,email,images);
+                 System.out.println("nombre d'images recues: "+ (images !=null?images.length:"null"));
             return ResponseEntity.ok("Inscription Reussie : " );
         } catch (IOException e) {
             return ResponseEntity.internalServerError().body("Erreur lors de l'incription.");
         }
     }
+    // lire image du compte ACCOUNT compte pour tester
+    @GetMapping("/{id}/image/{index}")
+    public ResponseEntity<byte[]> getAccount(@PathVariable Long id,@PathVariable int index) {
+        Optional <Account> accountx = this.accountService.ObtenirAcount(id);
+        if( accountx.isEmpty()){return null;}
+        byte[][] images = accountx.get().getImages();
+                
+        
+                return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(images[index]);
+       
+    }
+    
+
+    //lire compte pour tester
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Account>> getAccount(@PathVariable Long id) {
+        Optional <Account> accountx = this.accountService.ObtenirAcount(id);
+        if( accountx.isEmpty()){return null;}
+                     
+        
+        return ResponseEntity.ok().body(accountx);
+       
+    }
+
+
 
 
     //lire tous comptes
-    @PreAuthorize("hasAnyAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasAnyAuthority('ADMINISTRATOR','EMPLOYEE')")
     @GetMapping("/lirecomptes")
     public Stream<AccountAdminDto> getaAccount(@RequestParam(required = false) String compt) throws Exception {
         return this.accountService.getAccount(compt); }
